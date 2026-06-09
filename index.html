@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starlit Greeting | Animation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scene">
+        <div class="stars"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="clouds"></div>
+        <div id="weatherLayer" class="weather-layer"></div>
+        <div id="birdLayer"></div>
+        
+        <div class="overlay">
+            <h1>The Encounter</h1>
+            <p>A simple gesture in a starlit park.</p>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-restart" id="restartBtn">Replay Scene</button>
+                <button class="btn-restart" id="toggleDayBtn">Day / Night</button>
+                <button class="btn-restart" id="weatherBtn">Cycle Weather</button>
+            </div>
+        </div>
+
+        <!-- Person 1 (Moving) -->
+        <div class="person person-1 walking" id="p1">
+            <div class="speech-bubble">Hello there!</div>
+            <svg viewBox="0 0 60 120" width="60" height="120">
+                <g class="body-group">
+                    <line x1="30" y1="80" x2="20" y2="110" class="limb" id="p1-leg-l" />
+                    <line x1="30" y1="80" x2="40" y2="110" class="limb" id="p1-leg-r" />
+                    <rect x="20" y="40" width="20" height="40" rx="10" class="body" />
+                    <circle cx="30" cy="25" r="12" class="head" />
+                    <circle cx="26" cy="23" r="1.5" class="eye" />
+                    <circle cx="34" cy="23" r="1.5" class="eye" />
+                    <line x1="20" y1="45" x2="10" y2="70" class="limb" />
+                    <line x1="40" y1="45" x2="55" y2="25" class="limb arm-wave" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- Person 2 (Standing) -->
+        <div class="person person-2" id="p2">
+            <div class="speech-bubble">Hi friend!</div>
+            <svg viewBox="0 0 60 120" width="60" height="120">
+                <g class="body-group">
+                    <line x1="30" y1="80" x2="25" y2="115" class="limb" />
+                    <line x1="30" y1="80" x2="35" y2="115" class="limb" />
+                    <rect x="20" y="40" width="20" height="40" rx="10" class="body" />
+                    <circle cx="30" cy="25" r="12" class="head" />
+                    <circle cx="26" cy="23" r="1.5" class="eye" />
+                    <circle cx="34" cy="23" r="1.5" class="eye" />
+                    <line x1="20" y1="45" x2="10" y2="70" class="limb" />
+                    <line x1="40" y1="45" x2="55" y2="20" class="limb arm-wave" />
+                </g>
+            </svg>
+        </div>
+
+        <div class="ground">
+            <div class="grass-container" id="grassContainer"></div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

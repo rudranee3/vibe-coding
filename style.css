@@ -1,0 +1,404 @@
+:root {
+    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    --ground-color: #1b1b2f;
+    --person-1-color: #4ecca3;
+    --person-2-color: #ff4d4d;
+    --sky-accent: rgba(255, 255, 255, 0.1);
+    --glow-color: rgba(78, 204, 163, 0.3);
+    --day-bg: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
+    --day-ground: #2d5a27;
+    --font-main: 'Outfit', sans-serif;
+    --transition-speed: 1.5s;
+    --rain-color: rgba(174, 194, 224, 0.5);
+    --snow-color: rgba(255, 255, 255, 0.8);
+}
+
+body.day-mode {
+    background: var(--day-bg);
+}
+
+body.day-mode .stars, body.day-mode .shooting-star {
+    opacity: 0;
+}
+
+body.day-mode .ground {
+    background: var(--day-ground);
+}
+
+body.day-mode h1 {
+    background: linear-gradient(to right, #333, #2d5a27);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-gradient);
+    font-family: var(--font-main);
+    overflow: hidden;
+}
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Background Elements */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    opacity: 0.3;
+    animation: twinkle 15s infinite linear;
+}
+
+.shooting-star {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px #fff;
+    opacity: 0;
+    animation: shooting 4s infinite;
+}
+
+.shooting-star:nth-child(2) { animation-delay: 7s; left: 20%; }
+.shooting-star:nth-child(3) { animation-delay: 12s; left: 80%; }
+
+@keyframes shooting {
+    0% { transform: translateX(0) translateY(0) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    20% { transform: translateX(-300px) translateY(300px) scale(0); opacity: 0; }
+    100% { transform: translateX(-300px) translateY(300px) scale(0); opacity: 0; }
+}
+
+.clouds {
+    position: absolute;
+    top: 0;
+    width: 200%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/cloudy-day.png');
+    opacity: 0.1;
+    animation: drift 60s infinite linear;
+}
+
+@keyframes drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* Weather Layers */
+.weather-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.drop {
+    position: absolute;
+    background: var(--rain-color);
+    width: 1px;
+    height: 15px;
+    animation: fall linear infinite;
+}
+
+.flake {
+    position: absolute;
+    background: var(--snow-color);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    filter: blur(1px);
+    animation: fall-snow linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh); }
+}
+
+@keyframes fall-snow {
+    0% { transform: translateY(-10px) translateX(0); }
+    100% { transform: translateY(100vh) translateX(20px); }
+}
+
+/* Birds */
+.bird {
+    position: absolute;
+    width: 20px;
+    height: 10px;
+    fill: #333;
+    animation: fly 10s infinite linear;
+}
+
+@keyframes fly {
+    0% { left: -50px; top: 100px; transform: scale(1); }
+    50% { left: 50%; top: 50px; transform: scale(1.2); }
+    100% { left: 110%; top: 100px; transform: scale(1); }
+}
+
+.ground {
+    width: 100%;
+    height: 20%;
+    background: var(--ground-color);
+    position: relative;
+    box-shadow: 0 -20px 100px rgba(0,0,0,0.8);
+    overflow: visible;
+    transition: background var(--transition-speed);
+}
+
+.grass-container {
+    position: absolute;
+    top: -20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    pointer-events: none;
+}
+
+.grass {
+    width: 2px;
+    height: 20px;
+    background: #2d5a27;
+    transform-origin: bottom;
+    animation: sway 3s infinite ease-in-out;
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(15deg); }
+}
+
+.ground::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--person-1-color), transparent);
+    opacity: 0.3;
+    animation: sweep 4s infinite;
+}
+
+@keyframes sweep {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Character Styling */
+.person {
+    position: absolute;
+    bottom: 20%;
+    width: 60px;
+    height: 120px;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 0 10px transparent);
+}
+
+.person:hover {
+    transform: scale(1.1) translateY(-10px);
+    filter: drop-shadow(0 0 15px var(--person-1-color));
+}
+
+.person-2:hover {
+    transform: scaleX(-1.1) scaleY(1.1) translateY(-10px);
+    filter: drop-shadow(0 0 15px var(--person-2-color));
+}
+
+.person-1 {
+    left: -100px;
+    animation: walkingIn 8s forwards linear;
+}
+
+.person-2 {
+    right: 15%;
+    transform: scaleX(-1); /* Facing left */
+}
+
+/* SVG Parts */
+.head { fill: #f3e5ab; }
+.body { fill: var(--person-1-color); }
+.person-2 .body { fill: var(--person-2-color); }
+.limb { stroke: #333; stroke-width: 4; stroke-linecap: round; }
+
+/* Animations */
+@keyframes walkingIn {
+    0% { left: -100px; }
+    40% { left: 30%; }
+    100% { left: 30%; }
+}
+
+@keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.walking .body-group {
+    animation: bob 0.5s infinite ease-in-out;
+}
+
+.person:not(.walking) .body-group {
+    animation: breathe 3s infinite ease-in-out;
+}
+
+@keyframes breathe {
+    0%, 100% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(2px) scaleY(0.98); }
+}
+
+/* Waving Animation */
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-45deg); }
+    40% { transform: rotate(-10deg); }
+    60% { transform: rotate(-45deg); }
+    80% { transform: rotate(-10deg); }
+}
+
+.arm-wave {
+    transform-origin: 30px 45px;
+    animation: wave 2s infinite ease-in-out;
+    animation-delay: 4s;
+    opacity: 0.9;
+}
+
+.person-2 .arm-wave {
+    animation-delay: 4.5s;
+}
+
+/* Eye Blink */
+@keyframes blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.1); }
+}
+
+.eye {
+    fill: #333;
+    transform-origin: center;
+    animation: blink 4s infinite;
+}
+
+/* Speech Bubble */
+.speech-bubble {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: white;
+    color: #333;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid white;
+}
+
+.waving .speech-bubble {
+    transform: translateX(-50%) scale(1);
+}
+
+/* Reactions */
+.reaction {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    font-size: 1.5rem;
+    pointer-events: none;
+    animation: floatUp 2s forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translate(-50%, 0) scale(0.5); opacity: 1; }
+    100% { transform: translate(-50%, -100px) scale(1.2); opacity: 0; }
+}
+
+/* Click Star */
+.click-star {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 100;
+    box-shadow: 0 0 8px 2px #fff;
+}
+
+/* UI Elements */
+.overlay {
+    position: absolute;
+    top: 40px;
+    text-align: center;
+    color: white;
+    z-index: 10;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #fff, #4ecca3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn-restart {
+    padding: 10px 25px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn-restart:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: white;
+}
